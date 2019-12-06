@@ -1,0 +1,41 @@
+h1. LTC decoder for Teensy
+
+For synchronization between several devices "SMPTE timecode":https://en.wikipedia.org/wiki/SMPTE_timecode data is often encoded into audio using "LTC":https://en.wikipedia.org/wiki/Linear_timecode or linear time code. 
+
+This repository contains an LTC decoder for a "Teensy 3.2 microcontroller":https://www.pjrc.com/teensy/teensy31.html with "audio shield":https://www.pjrc.com/store/teensy3_audio.html.
+
+The audio shield takes care of the line level audio input. This audio input is then decoded. The decoding is done by "libltc":https://github.com/x42/libltc. The library runs as is on a Teensy, no modifications are needed. The repository is split up in three parts:
+
+* LTCDecoder contains a "PlatformIO":https://docs.platformio.org/en/latest/platforms/teensy.html Teensy project for the "Atom":https://atom.io/ text editor.
+* etc contains an LTC decoder for PC, use the makefile to build an executable. It also contains some short SMPTE test files
+* doc contains a picture of the hardware needed.
+
+<center>
+<figure>
+<img width="400" alt="Teensy with audio shield" src="docs/teensy_with_audio_shield.jpg">
+<caption>This repository contains an SMPTE/LTC decoder for a Teensy 3.2 with audio shield. The audio shield is used only for line level input of the audio.</caption>
+</figure>
+</center>
+
+h2. Installation and use
+
+Download "PlatformIO":https://docs.platformio.org/en/latest/platforms/teensy.html and run the project in the LTCDecoder folder on a Teensy with audio shield connected to your computer. Alternatively copy the source files to an Arduino project.
+
+To use the decoder connect the line level input left channel to an SMPTE source via e.g. an RCA plug.
+
+<center>
+<figure>
+<img width="200" alt="Teensy  audio shield" src="docs/audioshield_inputs.jpg">
+<caption>The audio shield is used for line level input of the audio. Use the left channel.</caption>
+</figure>
+</center>
+
+
+h2. License 
+
+Since libltc uses LGPL, LGPL is used here as well.
+
+
+h2(#credits). Credits
+
+Developed by Joren Six at IPEM, University Ghent for the "ASIL lab":https://www.ugent.be/lw/kunstwetenschappen/en/research-groups/musicology/ipem/artsciencelab-ipem of "de Krook":https://dekrook.be/.
