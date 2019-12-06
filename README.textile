@@ -12,7 +12,7 @@ The audio shield takes care of the line level audio input. This audio input is t
 
 <center>
 <figure>
-<img width="400" alt="Teensy with audio shield" src="docs/teensy_with_audio_shield.jpg">
+<img width="400" alt="Teensy with audio shield" src="doc/teensy_with_audio_shield.jpg">
 <caption>This repository contains an SMPTE/LTC decoder for a Teensy 3.2 with audio shield. The audio shield is used only for line level input of the audio.</caption>
 </figure>
 </center>
@@ -25,7 +25,7 @@ To use the decoder connect the line level input left channel to an SMPTE source 
 
 <center>
 <figure>
-<img width="200" alt="Teensy  audio shield" src="docs/audioshield_inputs.jpg">
+<img width="200" alt="Teensy  audio shield" src="doc/audioshield_inputs.jpg">
 <caption>The audio shield is used for line level input of the audio. Use the left channel.</caption>
 </figure>
 </center>
