@@ -1,34 +1,23 @@
 h1. LTC decoder for Teensy
 
-For synchronization between several devices "SMPTE timecode":https://en.wikipedia.org/wiki/SMPTE_timecode data is often encoded into audio using "LTC":https://en.wikipedia.org/wiki/Linear_timecode or linear time code. 
+For synchronization between several devices "SMPTE timecode":https://en.wikipedia.org/wiki/SMPTE_timecode data is often encoded into audio using "LTC":https://en.wikipedia.org/wiki/Linear_timecode or linear time code.
 
-This repository contains an LTC decoder for a "Teensy 3.2 microcontroller":https://www.pjrc.com/teensy/teensy31.html with "audio shield":https://www.pjrc.com/store/teensy3_audio.html.
+This repository contains several LTC decoders for different purposes.
 
-The audio shield takes care of the line level audio input. This audio input is then decoded. The decoding is done by "libltc":https://github.com/x42/libltc. The library runs as is on a Teensy, no modifications are needed. The repository is split up in three parts:
-
-* LTCDecoder contains a "PlatformIO":https://docs.platformio.org/en/latest/platforms/teensy.html Teensy project for the "Atom":https://atom.io/ text editor.
+* LTCDecoder contains a "PlatformIO":https://docs.platformio.org/en/latest/platforms/teensy.html Teensy project for the "Atom":https://atom.io/ text editor. for a "Teensy 3.2 microcontroller":https://www.pjrc.com/teensy/teensy31.html with "audio shield":https://www.pjrc.com/store/teensy3_audio.html. The audio shield takes care of the line level audio input. This audio input is then decoded. The decoding is done by "libltc":https://github.com/x42/libltc. The library runs as is on a Teensy, no modifications are needed. The repository is split up in three parts:
 * etc contains an LTC decoder for PC, use the makefile to build an executable. It also contains some short SMPTE test files
 * doc contains a picture of the hardware needed.
+* LTCInterruptSync contains a simplified LTC decoder for Teensy 3.2 used only to generate an accurate pulse every second at the start of the first frame. It only works for 30fps LTC. It does not decode the full LTC information but only the information needed to generate the sync pulse. It expects a LTC signal on which the Teensy "CHANGE" interrupts reacts: ideally the midpoint is 3.3V/2, the max value about 3.3V and the min value close to zero.
 
-<center>
-<figure>
-<img width="400" alt="Teensy with audio shield" src="doc/teensy_with_audio_shield.jpg">
-<caption>This repository contains an SMPTE/LTC decoder for a Teensy 3.2 with audio shield. The audio shield is used only for line level input of the audio.</caption>
-</figure>
-</center>
 
-h2. Installation and use
+h2. Testing
 
-Download "PlatformIO":https://docs.platformio.org/en/latest/platforms/teensy.html and run the project in the LTCDecoder folder on a Teensy with audio shield connected to your computer. Alternatively copy the source files to an Arduino project.
+For testing purposes files can be generated with ltcgen from ltctools (@brew install ltc-tools@). 
 
-To use the decoder connect the line level input left channel to an SMPTE source via e.g. an RCA plug.
-
-<center>
-<figure>
-<img width="200" alt="Teensy  audio shield" src="doc/audioshield_inputs.jpg">
-<caption>The audio shield is used for line level input of the audio. Use the left channel.</caption>
-</figure>
-</center>
+@ltcgen -f 30 -t 12:13:14:00 -d 2 -s 48000 12_13_14.wav@
+@ffmpeg -i 12_13_14.wav  -ac 1 -ar 12000 -f u8 -acodec pcm_u8 12_13_14.raw
+@dd if=12_13_14.raw of=offset_12_13_14.raw ibs=200 skip=1@
+@xxd -i ../test_files/offset_12_13_14.raw > test_12_13_14.h@
 
 
 h2. License 
